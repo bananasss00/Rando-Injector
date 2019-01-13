@@ -1,13 +1,11 @@
 #include <iostream>
 #include <Windows.h>
 #include <TlHelp32.h>
-
-// Change "MY_DLL_NAME.dll" to your dll name
-#define DLL_NAME "MY_DLL_NAME.dll"
+#include <string>
+#define walisson std::cout << "\nXing code desliga sexta-feira !!\n"
 
 // And you need:
-// 1. change all bytes(0x00, 0x01, 0x03....) in define "JUNKS" to random bytes
-// 2. change size this block by add new bytes
+// 1. Modifique todos os bytes(0x00, 0x01, 0x03....)
 #define JUNKS \
 __asm _emit 0x00 \
 __asm _emit 0x01 \
@@ -17,12 +15,13 @@ __asm _emit 0x05 \
 __asm _emit 0x06 \
 __asm _emit 0x07 \
 __asm _emit 0x08 \
-__asm _emit 0x09 \
 
 
-// Don't change this!
+// Não mude isso!
 #define _JUNK_BLOCK(s) __asm jmp s JUNKS __asm s:
 
+char dll[30];
+char processo[30];
 
 /////////////////////////////////////////////////////////////////////////////////////
 //                                 INJECTOR CODE                                   //
@@ -30,6 +29,7 @@ __asm _emit 0x09 \
 
 DWORD Process(char* ProcessName)
 {
+	std::cout << "\n Injectado com sucesso!!\n";
 	_JUNK_BLOCK(jmp_label1)
 	HANDLE hPID = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
 	
@@ -60,10 +60,29 @@ DWORD Process(char* ProcessName)
 	while (Process32Next(hPID, &ProcEntry));
 	
 	_JUNK_BLOCK(jmp_label10)
+system("PAUSE");
 }
 
 int main()
 {
+	SetConsoleTitle("Injector Code Building");
+	std::cout << " \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ " << std::endl;
+	std::cout << "//  ######   #######  ########  ########    #### ##    ##       ##  ######  ########  #######  ########    // " << std::endl;
+	std::cout << "// ##    ## ##     ## ##     ## ##           ##  ###   ##       ## ##    ##    ##    ##     ## ##     ##   // " << std::endl;
+	std::cout << "// ##       ##     ## ##     ## ##           ##  ####  ##       ## ##          ##    ##     ## ##     ##   // " << std::endl;
+	std::cout << "// ##       ##     ## ##     ## ######       ##  ## ## ##       ## ##          ##    ##     ## ########    // " << std::endl;
+	std::cout << "// ##       ##     ## ##     ## ##           ##  ##  #### ##    ## ##          ##    ##     ## ##   ##     // " << std::endl;
+	std::cout << "// ##    ## ##     ## ##     ## ##           ##  ##   ### ##    ## ##    ##    ##    ##     ## ##    ##    // " << std::endl;
+	std::cout << "// ######   #######  ########  ########    #### ##    ##  ######   ######     ##     #######  ##     ##    // " << std::endl;
+	std::cout << " ///////////////////////////////////////////////////////////////////////////////////////////////////////////"<< std::endl;
+	walisson;
+	
+
+	std::cout << "\nDigite o nome da dll: \n";
+	std::cin >> dll;
+	std::cout << "Digite o nome do processo: \n";
+	std::cin >> processo;
+
 	_JUNK_BLOCK(jmp_label11)
 	DWORD dwProcess;
 	
@@ -71,10 +90,10 @@ int main()
 	char myDLL[MAX_PATH];
 	
 	_JUNK_BLOCK(jmp_label13)
-	GetFullPathName(DLL_NAME, MAX_PATH, myDLL, 0);
+	GetFullPathName(dll, MAX_PATH, myDLL, 0);
 	
 	_JUNK_BLOCK(jmp_label4)
-	dwProcess = Process("csgo.exe");
+	dwProcess = Process(processo);
 	
 	_JUNK_BLOCK(jmp_label15)
 	HANDLE hProcess = OpenProcess(PROCESS_CREATE_THREAD | PROCESS_QUERY_INFORMATION | PROCESS_VM_READ | PROCESS_VM_WRITE | PROCESS_VM_OPERATION, FALSE, dwProcess);
@@ -92,6 +111,7 @@ int main()
 	CloseHandle(hProcess);
 	
 	_JUNK_BLOCK(jmp_label20)
+
 	return 0;
 	
 	_JUNK_BLOCK(jmp_label21)
