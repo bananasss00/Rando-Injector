@@ -1,8 +1,8 @@
 # Rando-Injector
 
+## It has been edited to include interactive mode (you provide process name and dll name on the go, not hardcoding it) - that's the only change.
+
 ## How to compile?
-It has been edited to include interactive mode (you provide process name and dll name on the go, not hardcoding it) - that's the only change.  
-  
 1) Change all bytes(0x00, 0x01, 0x03....) in define "JUNKS" to random bytes
 2) Change size this block by add new bytes
 3) Compile this 
