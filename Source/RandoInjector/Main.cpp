@@ -2,8 +2,9 @@
 #include <Windows.h>
 #include <TlHelp32.h>
 
-// Change "MY_DLL_NAME.dll" to your dll name
-#define DLL_NAME "MY_DLL_NAME.dll"
+// Interactive fork by rrroyal // github.com/rrroyal
+DWORD dwProcess;
+char realDLL[MAX_PATH];
 
 // And you need:
 // 1. change all bytes(0x00, 0x01, 0x03....) in define "JUNKS" to random bytes
@@ -64,6 +65,15 @@ DWORD Process(char* ProcessName)
 
 int main()
 {
+	char process[MAX_PATH];
+	char dll[MAX_PATH];
+	
+	printf("process: ");
+	scanf_s("%259s", process, MAX_PATH - 1);
+
+	printf("dll: ");
+	scanf_s("%259s", dll, MAX_PATH - 1);
+	
 	_JUNK_BLOCK(jmp_label11)
 	DWORD dwProcess;
 	
@@ -71,11 +81,11 @@ int main()
 	char myDLL[MAX_PATH];
 	
 	_JUNK_BLOCK(jmp_label13)
-	GetFullPathName(DLL_NAME, MAX_PATH, myDLL, 0);
+	GetFullPathNameA(dll, MAX_PATH, myDLL, NULL);
 	
 	_JUNK_BLOCK(jmp_label4)
-	dwProcess = Process("csgo.exe");
-	
+	dwProcess = Process(process);
+
 	_JUNK_BLOCK(jmp_label15)
 	HANDLE hProcess = OpenProcess(PROCESS_CREATE_THREAD | PROCESS_QUERY_INFORMATION | PROCESS_VM_READ | PROCESS_VM_WRITE | PROCESS_VM_OPERATION, FALSE, dwProcess);
 	
