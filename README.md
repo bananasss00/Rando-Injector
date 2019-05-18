@@ -5,11 +5,11 @@
 
 ## How to compile?
 ### Clean version
-Just open it in VS2017/2019 and build it (Windows 10 SDK 18362, Platform Toolkit v142)
+Just open it in VS2017/2019 and build it (Windows 10 SDK 18362, Platform Toolkit v142) - `F9` or `Ctrl+Shift+B`.
 
 ### Bloated version
 1) Change all bytes (0x00, 0x01, 0x03....) in define "JUNKS" to random bytes
-2) Change size of this block by adding new bytes
+2) Change size of the block by adding new bytes
 3) Compile (VS2017/2019 - `F9` or `Ctrl+Shift+B`)
 
 ## Source
