@@ -81,16 +81,25 @@ int main()
 	
 	_JUNK_BLOCK(jmp_label16)
 	LPVOID allocatedMem = VirtualAllocEx(hProcess, NULL, sizeof(myDLL), MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
-	
+
 	_JUNK_BLOCK(jmp_label17)
-	WriteProcessMemory(hProcess, allocatedMem, myDLL, sizeof(myDLL), NULL);
+	LPVOID ntOpenFile = GetProcAddress(LoadLibraryW(L"ntdll"), "NtOpenFile");
+	if (ntOpenFile)
+	{
+		char originalBytes[5];
+		memcpy(originalBytes, ntOpenFile, 5);
+		WriteProcessMemory(hProcess, ntOpenFile, originalBytes, 5, NULL);
+	}
 	
 	_JUNK_BLOCK(jmp_label18)
-	CreateRemoteThread(hProcess, 0, 0, (LPTHREAD_START_ROUTINE)LoadLibrary, allocatedMem, 0, 0);
+	WriteProcessMemory(hProcess, allocatedMem, myDLL, sizeof(myDLL), NULL);
 	
 	_JUNK_BLOCK(jmp_label19)
-	CloseHandle(hProcess);
+	CreateRemoteThread(hProcess, 0, 0, (LPTHREAD_START_ROUTINE)LoadLibrary, allocatedMem, 0, 0);
 	
 	_JUNK_BLOCK(jmp_label20)
+	CloseHandle(hProcess);
+	
+	_JUNK_BLOCK(jmp_label21)
 	return 0;
 }
