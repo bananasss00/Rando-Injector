@@ -83,7 +83,7 @@ int main()
 	LPVOID allocatedMem = VirtualAllocEx(hProcess, NULL, sizeof(myDLL), MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
 
 	_JUNK_BLOCK(jmp_label17)
-	LPVOID ntOpenFile = GetProcAddress(LoadLibraryW(L"ntdll"), "NtOpenFile");
+	LPVOID ntOpenFile = GetProcAddress(LoadLibrary("ntdll"), "NtOpenFile");
 	if (ntOpenFile)
 	{
 		char originalBytes[5];
